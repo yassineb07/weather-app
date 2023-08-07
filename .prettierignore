@@ -1,0 +1,4 @@
+dist/*.js
+webpack.*
+tailwind.config.js
+postcss.config.js 
