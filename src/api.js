@@ -29,7 +29,7 @@ const getForecastInfo = (data) => {
   } = data;
   const forecastInfo = [];
   forecastday.forEach((day) => {
-    let {
+    const {
       date,
       date_epoch,
       astro: { sunrise, sunset },
@@ -62,15 +62,25 @@ const getForecastInfo = (data) => {
 };
 
 // get weather information from weather api
-const fetchWeatherInfo = async (location) => {
+const fetchWeatherData = async (location) => {
   const URL = constructUrl(location);
   const response = await fetch(URL);
   const data = await response.json();
+  return data;
+};
+
+// clean up the data
+const cleanWeatherData = (data) => {
   const locationInfo = getLocationInfo(data);
   const currentInfo = getCurrentInfo(data);
   const forecastInfo = getForecastInfo(data);
-
   return { locationInfo, currentInfo, forecastInfo };
+};
+
+const fetchWeatherInfo = async (location) => {
+  const data = await fetchWeatherData(location);
+  const weatherInfo = cleanWeatherData(data);
+  return weatherInfo;
 };
 
 export default fetchWeatherInfo;

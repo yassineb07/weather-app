@@ -1,4 +1,9 @@
-import fetchWeatherInfo from './api';
+const createWeatherInfoItem = (elementId, elementIconId, text, src) => {
+  const element = document.getElementById(elementId);
+  const elementIcon = document.getElementById(elementIconId);
+  element.textContent = text;
+  elementIcon.src = src;
+};
 
 // populate the current weather card
 const populateCurrent = (data) => {
@@ -12,35 +17,45 @@ const populateCurrent = (data) => {
   const locationDateEl = document.getElementById('locationDate');
   locationDateEl.textContent = `${location.name} ${location.country} ${location.localtime}`;
 
-  // current temp
-  const tempEl = document.getElementById('temp');
-  tempEl.textContent = current.temp_c;
-  const tempIconEl = document.getElementById('tempIcon');
-  tempIconEl.src = `${current.condition.icon}`;
+  // create current temperature info
+  createWeatherInfoItem(
+    'temp',
+    'tempIcon',
+    current.temp_c,
+    current.condition.icon,
+  );
 
-  // morning
-  const morningIconEl = document.getElementById('morningIcon');
-  morningIconEl.src = forecast[0].hour[8].condition.icon;
-  const morningTempEl = document.getElementById('morningTemp');
-  morningTempEl.textContent = forecast[0].hour[8].temp_c;
+  // create morning temperature info
+  createWeatherInfoItem(
+    'morningTemp',
+    'morningIcon',
+    forecast[0].hour[8].temp_c,
+    forecast[0].hour[8].condition.icon,
+  );
 
-  // afternoon
-  const afternoonIconEl = document.getElementById('afternoonIcon');
-  afternoonIconEl.src = forecast[0].hour[14].condition.icon;
-  const afternoonTempEl = document.getElementById('afternoonTemp');
-  afternoonTempEl.textContent = forecast[0].hour[14].temp_c;
+  // create afternoon temperature info
+  createWeatherInfoItem(
+    'afternoonTemp',
+    'afternoonIcon',
+    forecast[0].hour[14].temp_c,
+    forecast[0].hour[14].condition.icon,
+  );
 
-  // evening
-  const eveningIconEl = document.getElementById('eveningIcon');
-  eveningIconEl.src = forecast[0].hour[19].condition.icon;
-  const eveningTempEl = document.getElementById('eveningTemp');
-  eveningTempEl.textContent = forecast[0].hour[19].temp_c;
+  // create evening temperature info
+  createWeatherInfoItem(
+    'eveningTemp',
+    'eveningIcon',
+    forecast[0].hour[19].temp_c,
+    forecast[0].hour[19].condition.icon,
+  );
 
-  // night
-  const nightIconEl = document.getElementById('nightIcon');
-  nightIconEl.src = forecast[0].hour[22].condition.icon;
-  const nightTempEl = document.getElementById('nightTemp');
-  nightTempEl.textContent = forecast[0].hour[22].temp_c;
+  // create night tempereture info
+  createWeatherInfoItem(
+    'nightTemp',
+    'nightIcon',
+    forecast[0].hour[22].temp_c,
+    forecast[0].hour[22].condition.icon,
+  );
 };
 
 // populate the all current weather card
@@ -53,10 +68,8 @@ const populateForecastDay = (data) => {};
 const populateForecastHour = (data) => {};
 
 // popolate the page
-const populate = async (location) => {
-  const weatherInfo = await fetchWeatherInfo(location);
-  console.log(weatherInfo);
-  populateCurrent(weatherInfo);
+const populate = (data) => {
+  populateCurrent(data);
 };
 
 export default populate;
