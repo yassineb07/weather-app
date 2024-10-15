@@ -83,4 +83,21 @@ const addEventListeners = (data) => {
     populate(data, 'f');
   });
 };
-export { populate, addEventListeners };
+
+// add loading component
+const showLoadingComponent = () => {
+  const loadingComponentEl = document.getElementById('loadingComponent');
+  loadingComponentEl.style.display = 'block';
+};
+
+const hideLoadingComponent = () => {
+  const loadingComponentEl = document.getElementById('loadingComponent');
+  loadingComponentEl.style.display = 'none';
+};
+
+export {
+  populate,
+  addEventListeners,
+  showLoadingComponent,
+  hideLoadingComponent,
+};

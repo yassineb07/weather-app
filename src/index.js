@@ -1,5 +1,10 @@
 import './style.css';
-import { populate, addEventListeners } from './dom';
+import {
+  populate,
+  addEventListeners,
+  showLoadingComponent,
+  hideLoadingComponent,
+} from './dom';
 import fetchWeatherInfo from './api';
 
 // get user input
@@ -10,7 +15,9 @@ const getUserInput = () => {
 
 // get data from server and populate the page
 const displayData = async (location) => {
+  showLoadingComponent();
   const weatherInfo = await fetchWeatherInfo(location);
+  hideLoadingComponent();
   populate(weatherInfo);
   addEventListeners(weatherInfo);
 };
