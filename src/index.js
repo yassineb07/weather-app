@@ -22,8 +22,6 @@ const displayData = async (location) => {
   addEventListeners(weatherInfo);
 };
 
-// add event listeners
-
 // form submit
 const form = document.getElementById('form');
 form.addEventListener('submit', (e) => {

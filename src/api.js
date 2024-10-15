@@ -2,7 +2,7 @@ const baseURL = 'http://api.weatherapi.com/v1/forecast.json?key=';
 const KEY = 'f7cde5d220a0466bba9165937232807';
 const days = 3;
 
-// creat Call URL
+// create Call URL
 const constructUrl = (location) =>
   `${baseURL}${KEY}&q=${location}&days=${days}`;
 
@@ -64,7 +64,7 @@ const getForecastInfo = (data) => {
 // get weather information from weather api
 const fetchWeatherData = async (location) => {
   const URL = constructUrl(location);
-  const response = await fetch(URL);
+  const response = await fetch(URL, { mode: 'cors' });
   const data = await response.json();
   return data;
 };
