@@ -6,7 +6,7 @@ const createWeatherInfoItem = (elementId, elementIconId, text, src) => {
 };
 
 // populate the current weather card
-const populateCurrent = (data) => {
+const populateCurrent = (data, measureUnit) => {
   const location = data.locationInfo;
   const current = data.currentInfo;
   const forecast = data.forecastInfo;
@@ -21,7 +21,7 @@ const populateCurrent = (data) => {
   createWeatherInfoItem(
     'temp',
     'tempIcon',
-    current.temp_c,
+    current[`temp_${measureUnit}`],
     current.condition.icon,
   );
 
@@ -29,7 +29,7 @@ const populateCurrent = (data) => {
   createWeatherInfoItem(
     'morningTemp',
     'morningIcon',
-    forecast[0].hour[8].temp_c,
+    forecast[0].hour[8][`temp_${measureUnit}`],
     forecast[0].hour[8].condition.icon,
   );
 
@@ -37,7 +37,7 @@ const populateCurrent = (data) => {
   createWeatherInfoItem(
     'afternoonTemp',
     'afternoonIcon',
-    forecast[0].hour[14].temp_c,
+    forecast[0].hour[14][`temp_${measureUnit}`],
     forecast[0].hour[14].condition.icon,
   );
 
@@ -45,15 +45,15 @@ const populateCurrent = (data) => {
   createWeatherInfoItem(
     'eveningTemp',
     'eveningIcon',
-    forecast[0].hour[19].temp_c,
+    forecast[0].hour[19][`temp_${measureUnit}`],
     forecast[0].hour[19].condition.icon,
   );
 
-  // create night tempereture info
+  // create night temperature info
   createWeatherInfoItem(
     'nightTemp',
     'nightIcon',
-    forecast[0].hour[22].temp_c,
+    forecast[0].hour[22][`temp_${measureUnit}`],
     forecast[0].hour[22].condition.icon,
   );
 };
@@ -61,15 +61,26 @@ const populateCurrent = (data) => {
 // populate the all current weather card
 const populateCurrentAll = (data) => {};
 
-// populate the daily forcast card
+// populate the daily forecast card
 const populateForecastDay = (data) => {};
 
 // populate the hourly forecast card
 const populateForecastHour = (data) => {};
 
-// popolate the page
-const populate = (data) => {
-  populateCurrent(data);
+// populate the page
+const populate = (data, measureUnit = 'c') => {
+  populateCurrent(data, measureUnit);
 };
 
-export default populate;
+// add event listeners
+const addEventListeners = (data) => {
+  const tempCButton = document.getElementById('tempC');
+  const tempFButton = document.getElementById('tempF');
+  tempCButton.addEventListener('click', () => {
+    populate(data, 'c');
+  });
+  tempFButton.addEventListener('click', () => {
+    populate(data, 'f');
+  });
+};
+export { populate, addEventListeners };
